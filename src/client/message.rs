@@ -1,6 +1,10 @@
 use serde::{Deserialize, Serialize};
 
-use crate::{awc_wrapper::SendClientRequestFut, models::message::MessageObject, Client};
+use crate::{
+    awc_wrapper::SendClientRequestFut,
+    models::{empty::Empty, message::MessageObject},
+    Client,
+};
 
 use super::API_ENDPOINT_BASE;
 
@@ -127,7 +131,7 @@ impl Client {
         reply_token: &str,
         messages: Vec<MessageObject>,
         notification_disabled: Option<bool>,
-    ) -> SendClientRequestFut<()> {
+    ) -> SendClientRequestFut<Empty> {
         let body = ReplyRequest {
             reply_token: reply_token.to_string(),
             messages,
@@ -147,7 +151,7 @@ impl Client {
         messages: Vec<MessageObject>,
         notification_disabled: Option<bool>,
         custom_aggregation_units: Option<Vec<String>>,
-    ) -> SendClientRequestFut<()> {
+    ) -> SendClientRequestFut<Empty> {
         let body = PushRequest {
             to: to.to_string(),
             messages,
@@ -168,7 +172,7 @@ impl Client {
         messages: Vec<MessageObject>,
         notification_disabled: Option<bool>,
         custom_aggregation_units: Option<Vec<String>>,
-    ) -> SendClientRequestFut<()> {
+    ) -> SendClientRequestFut<Empty> {
         let body = MulticastRequest {
             to,
             messages,
@@ -187,7 +191,7 @@ impl Client {
         x_line_retry_key: Option<&str>,
         messages: Vec<MessageObject>,
         notification_disabled: Option<bool>,
-    ) -> SendClientRequestFut<()> {
+    ) -> SendClientRequestFut<Empty> {
         let body = BroadcastRequest {
             messages,
             notification_disabled,
@@ -250,7 +254,7 @@ impl Client {
         ))
     }
 
-    pub fn validate_reply(&self, messages: Vec<MessageObject>) -> SendClientRequestFut<()> {
+    pub fn validate_reply(&self, messages: Vec<MessageObject>) -> SendClientRequestFut<Empty> {
         let body = ValidateReplyRequest { messages };
         SendClientRequestFut::new(self.post(
             body,
@@ -259,7 +263,7 @@ impl Client {
         ))
     }
 
-    pub fn validate_push(&self, messages: Vec<MessageObject>) -> SendClientRequestFut<()> {
+    pub fn validate_push(&self, messages: Vec<MessageObject>) -> SendClientRequestFut<Empty> {
         let body = ValidatePushRequest { messages };
         SendClientRequestFut::new(self.post(
             body,
@@ -268,7 +272,7 @@ impl Client {
         ))
     }
 
-    pub fn validate_multicast(&self, messages: Vec<MessageObject>) -> SendClientRequestFut<()> {
+    pub fn validate_multicast(&self, messages: Vec<MessageObject>) -> SendClientRequestFut<Empty> {
         let body = ValidateMulticastRequest { messages };
         SendClientRequestFut::new(self.post(
             body,
@@ -277,7 +281,7 @@ impl Client {
         ))
     }
 
-    pub fn validate_narrowcast(&self, messages: Vec<MessageObject>) -> SendClientRequestFut<()> {
+    pub fn validate_narrowcast(&self, messages: Vec<MessageObject>) -> SendClientRequestFut<Empty> {
         let body = ValidateNarrowcastRequest { messages };
         SendClientRequestFut::new(self.post(
             body,
@@ -286,7 +290,7 @@ impl Client {
         ))
     }
 
-    pub fn validate_broadcast(&self, messages: Vec<MessageObject>) -> SendClientRequestFut<()> {
+    pub fn validate_broadcast(&self, messages: Vec<MessageObject>) -> SendClientRequestFut<Empty> {
         let body = ValidateBroadcastRequest { messages };
         SendClientRequestFut::new(self.post(
             body,
