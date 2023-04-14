@@ -27,26 +27,6 @@ struct ReplyMessage {
     messages: Vec<MessageObject>,
 }
 
-pub async fn handler(
-    context: String,
-    custom_header: CustomHeader,
-    app_state: web::Data<AppState>,
-) -> impl Responder {
-    info!("Request body: {}", context);
-
-    let client = Arc::clone(&app_state.line_client);
-
-    let signature = get_signature_from_header(&custom_header);
-
-    verify_signature(&client, signature, &context);
-
-    let webhook_event = get_webhook_event(&context);
-
-    spawn(async move { webhook_handler(&webhook_event, &client).await });
-
-    HttpResponse::Ok().body("")
-}
-
 fn get_signature_from_header(custom_header: &CustomHeader) -> &str {
     &custom_header.x_line_signature
 }
@@ -88,6 +68,26 @@ async fn reply(event: &Event, client: &Client) {
     };
 
     client.reply(&reply_token, messages, None).await.unwrap();
+}
+
+pub async fn handler(
+    context: String,
+    custom_header: CustomHeader,
+    app_state: web::Data<AppState>,
+) -> impl Responder {
+    info!("Request body: {}", context);
+
+    let client = Arc::clone(&app_state.line_client);
+
+    let signature = get_signature_from_header(&custom_header);
+
+    verify_signature(&client, signature, &context);
+
+    let webhook_event = get_webhook_event(&context);
+
+    spawn(async move { webhook_handler(&webhook_event, &client).await });
+
+    HttpResponse::Ok().body("")
 }
 
 pub fn router(cfg: &mut web::ServiceConfig) {
