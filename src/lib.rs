@@ -13,12 +13,13 @@
 //! - English: <https://developers.line.biz/en/docs/messaging-api/overview/>
 //! - Japanese: <https://developers.line.biz/ja/docs/messaging-api/overview/>
 
-pub mod awc_wrapper;
+pub(crate) mod awc_wrapper;
 pub(crate) mod client;
 pub(crate) mod error;
 pub mod extractor;
 pub mod jwt;
 pub mod models;
 
+pub use crate::awc_wrapper::{SendClientRequestByteFut, SendClientRequestFut};
 pub use crate::client::Client;
 pub use crate::error::Error;
