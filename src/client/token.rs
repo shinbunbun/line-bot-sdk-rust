@@ -2,6 +2,7 @@ use serde::Deserialize;
 use serde::Serialize;
 
 use crate::awc_wrapper::SendClientRequestFut;
+use crate::models::empty::Empty;
 use crate::Client;
 use crate::Error;
 
@@ -104,7 +105,7 @@ impl Client {
         client_id: &str,
         client_secret: &str,
         access_token: &str,
-    ) -> SendClientRequestFut<()> {
+    ) -> SendClientRequestFut<Empty> {
         SendClientRequestFut::new(self.post_form(
             [
                 ("client_id", client_id),
@@ -140,7 +141,7 @@ impl Client {
         ))
     }
 
-    pub fn revoke_token_v2(&self, access_token: &str) -> SendClientRequestFut<()> {
+    pub fn revoke_token_v2(&self, access_token: &str) -> SendClientRequestFut<Empty> {
         SendClientRequestFut::new(self.post_form(
             [("access_token", access_token)],
             &format!("{}/v2/oauth/revoke", API_ENDPOINT_BASE),

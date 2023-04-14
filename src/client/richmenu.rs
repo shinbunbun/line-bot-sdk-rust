@@ -3,7 +3,7 @@ use typed_builder::TypedBuilder;
 
 use crate::{
     awc_wrapper::{SendClientRequestByteFut, SendClientRequestFut},
-    models::action::Actions,
+    models::{action::Actions, empty::Empty},
     Client, Error,
 };
 
@@ -103,7 +103,7 @@ impl Client {
         ))
     }
 
-    pub fn rich_menu_validate(&self, richmenu: RichMenuObject) -> SendClientRequestFut<()> {
+    pub fn rich_menu_validate(&self, richmenu: RichMenuObject) -> SendClientRequestFut<Empty> {
         SendClientRequestFut::new(self.post(
             richmenu,
             &format!("{}/v2/bot/richmenu/validate", API_ENDPOINT_BASE),
@@ -140,14 +140,14 @@ impl Client {
         ))
     }
 
-    pub fn delete_rich_menu(&self, richmenu_id: &str) -> SendClientRequestFut<()> {
+    pub fn delete_rich_menu(&self, richmenu_id: &str) -> SendClientRequestFut<Empty> {
         SendClientRequestFut::new(self.delete(
             &format!("{}/v2/bot/richmenu/{}", API_ENDPOINT_BASE, richmenu_id),
             None::<&[(); 0]>,
         ))
     }
 
-    pub fn post_user_all_rich_menu(&self, richmenu_id: &str) -> SendClientRequestFut<()> {
+    pub fn post_user_all_rich_menu(&self, richmenu_id: &str) -> SendClientRequestFut<Empty> {
         SendClientRequestFut::new(self.post(
             (),
             &format!(
@@ -167,7 +167,7 @@ impl Client {
         ))
     }
 
-    pub fn delete_user_all_rich_menu(&self) -> SendClientRequestFut<()> {
+    pub fn delete_user_all_rich_menu(&self) -> SendClientRequestFut<Empty> {
         SendClientRequestFut::new(self.delete(
             &format!("{}/v2/bot/user/all/richmenu", API_ENDPOINT_BASE),
             None::<&[(); 0]>,
@@ -178,7 +178,7 @@ impl Client {
         &self,
         rich_menu_alias_id: &str,
         rich_menu_id: &str,
-    ) -> SendClientRequestFut<()> {
+    ) -> SendClientRequestFut<Empty> {
         SendClientRequestFut::new(self.post(
             [
                 ("richMenuId", rich_menu_id),
@@ -189,7 +189,7 @@ impl Client {
         ))
     }
 
-    pub fn delete_rich_menu_alias(&self, rich_menu_alias_id: &str) -> SendClientRequestFut<()> {
+    pub fn delete_rich_menu_alias(&self, rich_menu_alias_id: &str) -> SendClientRequestFut<Empty> {
         SendClientRequestFut::new(self.delete(
             &format!(
                 "{}/v2/bot/richmenu/alias/{}",
@@ -203,7 +203,7 @@ impl Client {
         &self,
         rich_menu_alias_id: &str,
         rich_menu_id: &str,
-    ) -> SendClientRequestFut<()> {
+    ) -> SendClientRequestFut<Empty> {
         SendClientRequestFut::new(self.post(
             [("richMenuId", rich_menu_id)],
             &format!(
@@ -239,7 +239,7 @@ impl Client {
         &self,
         user_id: &str,
         richmenu_id: &str,
-    ) -> SendClientRequestFut<()> {
+    ) -> SendClientRequestFut<Empty> {
         SendClientRequestFut::new(self.post(
             (),
             &format!(
@@ -254,7 +254,7 @@ impl Client {
         &self,
         rich_menu_id: &str,
         user_ids: Vec<String>,
-    ) -> Result<SendClientRequestFut<()>, Error> {
+    ) -> Result<SendClientRequestFut<Empty>, Error> {
         Ok(SendClientRequestFut::new(
             self.post(
                 [
@@ -284,7 +284,7 @@ impl Client {
         ))
     }
 
-    pub fn delete_user_rich_menu(&self, user_id: &str) -> SendClientRequestFut<()> {
+    pub fn delete_user_rich_menu(&self, user_id: &str) -> SendClientRequestFut<Empty> {
         SendClientRequestFut::new(self.delete(
             &format!("{}/v2/bot/user/{}/richmenu", API_ENDPOINT_BASE, user_id),
             None::<&[(); 0]>,
@@ -294,7 +294,7 @@ impl Client {
     pub fn post_rich_menu_bulk_unlink(
         &self,
         user_ids: Vec<String>,
-    ) -> Result<SendClientRequestFut<()>, Error> {
+    ) -> Result<SendClientRequestFut<Empty>, Error> {
         Ok(SendClientRequestFut::new(
             self.post(
                 [(
