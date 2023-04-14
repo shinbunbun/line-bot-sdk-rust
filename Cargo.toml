@@ -5,6 +5,8 @@ version = "0.1.0"
 authors = ["shinbunbun"]
 description = "LINE Messaging API SDK for Rust"
 edition = "2021"
+repository = "https://github.com/shinbunbun/line-bot-sdk-rust"
+
 
 [dependencies]
 actix-web = "4.3"
