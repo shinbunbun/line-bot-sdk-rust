@@ -12,6 +12,18 @@
 //!
 //! - English: <https://developers.line.biz/en/docs/messaging-api/overview/>
 //! - Japanese: <https://developers.line.biz/ja/docs/messaging-api/overview/>
+//!
+//! ## Unimplemented
+//!
+//! - [ ] Webhook Event Objects
+//!   - [ ] Device link event
+//!   - [ ] Device unlink event
+//!   - [ ] LINE Things scenario execution event
+//! - [ ] Message
+//!   - [ ] Send narrowcast message
+//!   - [ ] Get narrowcast message status
+//! - [ ] Managing Audience
+//! - [ ] Insight
 
 pub(crate) mod awc_wrapper;
 pub(crate) mod client;
