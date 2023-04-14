@@ -2,7 +2,7 @@
 name = "line_bot_sdk"
 license = "MIT"
 version = "0.1.0"
-authors = ["Yuto Takamune"]
+authors = ["shinbunbun"]
 description = "LINE Messaging API SDK for Rust"
 edition = "2021"
 
