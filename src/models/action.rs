@@ -32,8 +32,6 @@ pub struct PostbackAction {
     #[builder(default, setter(transform = |x: &str| Some(x.to_string())))]
     pub display_text: Option<String>,
 
-    /// This property will be abolished in the future.
-    /// https://developers.line.biz/en/reference/messaging-api/#postback-action
     // #[validate(length(max = 300))]
     #[serde(skip_serializing_if = "Option::is_none")]
     #[builder(default, setter(transform = |x: &str| Some(x.to_string())))]
