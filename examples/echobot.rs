@@ -3,14 +3,13 @@ use std::{env, sync::Arc};
 use actix_web::{middleware::Logger, rt::spawn, web, App, HttpResponse, HttpServer, Responder};
 
 use line_bot_sdk::{
-    extractor::CustomHeader,
     models::message::MessageObject,
     models::webhook_event,
     models::{
         message::text::TextMessage,
         webhook_event::{Event, Message, Root, Text},
     },
-    Client,
+    Client, CustomHeader,
 };
 use log::info;
 

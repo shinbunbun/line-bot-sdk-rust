@@ -25,12 +25,13 @@
 //! - [ ] Managing Audience
 //! - [ ] Insight
 
-pub(crate) mod awc_wrapper;
-pub(crate) mod client;
-pub(crate) mod error;
-pub mod extractor;
+mod awc_wrapper;
+mod client;
+mod error;
+mod extractor;
 pub mod jwt;
 pub mod models;
 
 pub use crate::client::Client;
 pub use crate::error::Error;
+pub use crate::extractor::CustomHeader;
