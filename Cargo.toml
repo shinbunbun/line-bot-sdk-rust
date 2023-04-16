@@ -1,7 +1,7 @@
 [package]
 name = "line_bot_sdk"
 license = "MIT"
-version = "0.1.2"
+version = "0.1.3-rc.1"
 authors = ["shinbunbun"]
 description = "LINE Messaging API SDK for Rust"
 edition = "2021"
