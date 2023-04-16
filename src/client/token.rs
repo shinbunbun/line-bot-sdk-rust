@@ -4,7 +4,6 @@ use serde::Serialize;
 use crate::awc_wrapper::SendClientRequestFut;
 use crate::models::empty::Empty;
 use crate::Client;
-use crate::Error;
 
 use super::API_ENDPOINT_BASE;
 
@@ -57,47 +56,31 @@ impl Client {
         ))
     }
 
-    pub async fn verify_token(&self, access_token: &str) -> Result<VerifyTokenResponse, Error> {
-        let res_body = self
-            .get(
-                &format!("{}/oauth2/v2.1/verify", API_ENDPOINT_BASE),
-                Some(&[("access_token", access_token)]),
-                Some("application/x-www-form-urlencoded"),
-                false,
-            )?
-            .await
-            .map_err(Error::AwcSendRequestError)?
-            .body()
-            .await
-            .map_err(Error::ActixWebPayloadError)?
-            .to_vec();
-        serde_json::from_slice(&res_body).map_err(Error::SerdeJsonError)
+    pub fn verify_token(&self, access_token: &str) -> SendClientRequestFut<VerifyTokenResponse> {
+        SendClientRequestFut::new(self.get(
+            &format!("{}/oauth2/v2.1/verify", API_ENDPOINT_BASE),
+            Some(&[("access_token", access_token)]),
+            Some("application/x-www-form-urlencoded"),
+            false,
+        ))
     }
 
-    pub async fn get_tokens_kid(
+    pub fn get_tokens_kid(
         &self,
         client_assertion: &str,
-    ) -> Result<GetTokensKidResponse, Error> {
-        let res_body = self
-            .get(
-                &format!("{}/oauth2/v2.1/tokens/kid", API_ENDPOINT_BASE),
-                Some(&[
-                    (
-                        "client_assertion_type",
-                        "urn:ietf:params:oauth:client-assertion-type:jwt-bearer",
-                    ),
-                    ("client_assertion", client_assertion),
-                ]),
-                Some("application/x-www-form-urlencoded"),
-                false,
-            )?
-            .await
-            .map_err(Error::AwcSendRequestError)?
-            .body()
-            .await
-            .map_err(Error::ActixWebPayloadError)?
-            .to_vec();
-        serde_json::from_slice(&res_body).map_err(Error::SerdeJsonError)
+    ) -> SendClientRequestFut<GetTokensKidResponse> {
+        SendClientRequestFut::new(self.get(
+            &format!("{}/oauth2/v2.1/tokens/kid", API_ENDPOINT_BASE),
+            Some(&[
+                (
+                    "client_assertion_type",
+                    "urn:ietf:params:oauth:client-assertion-type:jwt-bearer",
+                ),
+                ("client_assertion", client_assertion),
+            ]),
+            Some("application/x-www-form-urlencoded"),
+            false,
+        ))
     }
 
     pub fn revoke_token(

@@ -4,7 +4,7 @@ use crate::client::API_ENDPOINT_BASE;
 use crate::Client;
 
 impl Client {
-    pub async fn get_content(&self, message_id: &str) -> SendClientRequestByteFut {
+    pub fn get_content(&self, message_id: &str) -> SendClientRequestByteFut {
         let url = format!(
             "{}/v2/bot/message/{}/content",
             API_ENDPOINT_BASE, message_id

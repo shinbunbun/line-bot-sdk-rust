@@ -1,7 +1,6 @@
 use serde::{Deserialize, Serialize};
 
 use crate::awc_wrapper::SendClientRequestFut;
-use crate::error::Error;
 use crate::models::empty::Empty;
 use crate::Client;
 
@@ -17,22 +16,13 @@ impl Client {
         ))
     }
 
-    pub async fn get_webhook_endpoint_info(&self) -> Result<WebhookEndpointInfo, Error> {
-        let mut res = self
-            .get(
-                &format!("{}/v2/bot/channel/webhook/endpoint", API_ENDPOINT_BASE),
-                None::<&[(); 0]>,
-                None,
-                true,
-            )?
-            .await
-            .map_err(Error::AwcSendRequestError)?;
-        let res_body = res
-            .body()
-            .await
-            .map_err(Error::ActixWebPayloadError)?
-            .to_vec();
-        serde_json::from_slice(&res_body).map_err(Error::SerdeJsonError)
+    pub fn get_webhook_endpoint_info(&self) -> SendClientRequestFut<WebhookEndpointInfo> {
+        SendClientRequestFut::new(self.get(
+            &format!("{}/v2/bot/channel/webhook/endpoint", API_ENDPOINT_BASE),
+            None::<&[(); 0]>,
+            None,
+            true,
+        ))
     }
 
     pub fn test_webhook_endpoint_url(
