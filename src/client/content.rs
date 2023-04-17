@@ -29,4 +29,12 @@ impl Client {
         );
         SendClientRequestFut::new(self.get(&url, None::<&[(); 0]>, None, true))
     }
+
+    pub fn get_message_content_preview(&self, message_id: &str) -> SendClientRequestByteFut {
+        let url = format!(
+            "{}/v2/bot/message/{}/content/preview",
+            API_DATA_ENDPOINT_BASE, message_id
+        );
+        SendClientRequestByteFut::new(self.get(&url, None::<&[(); 0]>, None, true))
+    }
 }
