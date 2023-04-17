@@ -50,7 +50,6 @@ impl SendClientRequestByteFut {
             let req = req?;
             let mut res = req.await.map_err(Error::AwcSendRequestError)?;
             let byte = res.body().await.map_err(Error::ActixWebPayloadError)?;
-            println!("byte: {:?}", byte);
             Ok(byte)
         };
 
