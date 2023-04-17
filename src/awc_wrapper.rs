@@ -49,7 +49,9 @@ impl SendClientRequestByteFut {
         let fut = async move {
             let req = req?;
             let mut res = req.await.map_err(Error::AwcSendRequestError)?;
-            res.body().await.map_err(Error::ActixWebPayloadError)
+            let byte = res.body().await.map_err(Error::ActixWebPayloadError)?;
+            println!("byte: {:?}", byte);
+            Ok(byte)
         };
 
         Self { fut: Box::pin(fut) }
